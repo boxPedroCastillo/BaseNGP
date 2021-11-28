@@ -1,0 +1,20 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+generator nestgraphql {
+  provider = "node node_modules/prisma-nestjs-graphql"
+  output   = "./@generated"
+}
+
+model User {
+  id    String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name  String
+  email String @unique
+}
